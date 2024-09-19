@@ -1,0 +1,2 @@
+# CSCI2100A_24P1
+Project Template for CUHK CSCI2100A Fall 2024
