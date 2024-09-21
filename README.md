@@ -26,7 +26,7 @@ Visit [https://financialmodelingprep.com/api/v3/market-capitalization/AAPL](http
 
 ##### Windows
 
-This part is a little complicated.
+This part is a little complicated as Windows does not come with a package manager and C++ compiler, we have to install the entire toolkit manually.
 
 To begin with, check your system to make sure there is no existing `g++` command. If you have installed `mingw` or `cygwin`, you should uninstall them or remove then from environment variables first.
 
@@ -69,27 +69,24 @@ code.exe
 
 ##### macOS
 
-First, make sure you have enabled the command line tools and Homebrew installed.
-
-```bash
-xcode-select --install
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+First, make sure you have enabled the command line tools `xcode-select --install` and [Homebrew](https://brew.sh/) installed.
 
 Then, you can install the required libraries using Homebrew.
 
 ```bash
-brew intall curl
 brew install nlohmann-json
 ```
 
 To check if the installation is successful, run the following command.
 
 ```bash
-g++ src/cpp/example.cpp -o code -lc
+export CPLUS_INCLUDE_PATH=/opt/homebrew/Cellar/nlohmann-json/3.11.3/include
+g++ src/cpp/example.cpp -o code -lcurl -std=c++17
 export API_KEY="YOUR_API_KEY"
 ./code
 ```
+
+**Note that the version number 3.11.3 may vary, but you can always check the actual path by `ls /opt/homebrew/Cellar/nlohmann-json`**
 
 ##### Linux
 
@@ -123,17 +120,12 @@ java -classpath ./lib/gson.jar src/java/example.java
 
 ##### macOS
 
-First, make sure you have enabled the command line tools and Homebrew installed.
+First, make sure you have enabled the command line tools `xcode-select --install` and [Homebrew](https://brew.sh/) installed.
+
+Then, install OpenJDK build by Microsoft using Homebrew.
 
 ```bash
-xcode-select --install
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-Then, install OpenJDK using Homebrew.
-
-```bash
-brew install openjdk@17
+brew install microsoft-openjdk@17
 ```
 
 Run the example code with
@@ -147,7 +139,6 @@ java -classpath ./lib/gson.jar src/java/example.java
 
 ```bash
 sudo apt install openjdk-17-jdk
-sudo apt install libgoogle-gson-java
 ```
 
 Then run the example code with
