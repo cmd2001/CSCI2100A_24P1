@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 public class example {
@@ -30,8 +32,8 @@ public class example {
         }
     }
 
-    public static List<String> historicalMarketCapApi(String apiKey, String stock, String from, String to, int limit) {
-        String url = "https://financialmodelingprep.com/api/v3/historical-market-capitalization/" + stock + "?limit=" + limit + "&from=" + from + "&to=" + to + "&apikey=" + apiKey;
+    public static JsonObject historicalMarketCapApi(String apiKey, String stock, String from, String to, int limit) {
+        String url = "https://financialmodelingprep.com/api/v3/historical-price-full/" + stock + "?limit=" + limit + "&from=" + from + "&to=" + to + "&apikey=" + apiKey;
         try {
             URL urlObj = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
@@ -44,7 +46,8 @@ public class example {
             }
             reader.close();
 
-            return new Gson().fromJson(response.toString(), List.class);
+            JsonParser parser = new JsonParser();
+            return parser.parse(response.toString()).getAsJsonObject();
         } catch (IOException e) {
             return null;
         }
@@ -55,7 +58,7 @@ public class example {
         List<String> marketCaps = marketCapApi(apiKey, stocks);
         System.out.println(marketCaps);
 
-        List<String> historicalMarketCaps = historicalMarketCapApi(apiKey, "AAPL", "2020-01-01", "2020-12-31", 10);
+        JsonObject historicalMarketCaps = historicalMarketCapApi(apiKey, "AAPL", "2021-01-01", "2021-01-10", 10);
         System.out.println(historicalMarketCaps);
     }
 }

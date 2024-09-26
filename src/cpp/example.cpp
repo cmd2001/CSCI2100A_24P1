@@ -46,7 +46,7 @@ auto historical_market_cap_api(std::string API_KEY, std::string stock,
                                std::string _from, std::string to, int limit) {
   std::string url =
       "https://financialmodelingprep.com/api/v3/"
-      "historical-market-capitalization/" +
+      "historical-price-full/" +
       stock + "?limit=" + std::to_string(limit) + "&from=" + _from +
       "&to=" + to + "&apikey=" + API_KEY;
   CURL *curl;
