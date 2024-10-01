@@ -1,4 +1,5 @@
 import csv
+csv.field_size_limit(1024 * 1024 * 1024)
 
 score = 0
 
@@ -23,7 +24,7 @@ try:
         score += 5
     else:
         print('incomplete table2')
-except:
+except Exception as e:
     print('failed to parse table2')
     tab2 = []
 
@@ -60,7 +61,8 @@ try:
     with open("output/table1_sorted_b.csv", mode="r") as file:
         reader = csv.DictReader(file)
         tab1_sorted_b = [row for row in reader]
-        tab1_sorted_b_market_cap = [int(row["market_cap"]) for row in tab1_sorted_b]
+        tab1_sorted_b_market_cap = [int(row["market_cap"])
+                                    for row in tab1_sorted_b]
         if tab1_sorted_b_market_cap != sorted(tab1_sorted_b_market_cap):
             print("table1_sorted_b.csv is not correct")
             print("score: {}".format(score))
